@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
 import com.tjycompany.markdownnote.base.BaseTabFragment
 import com.tjycompany.markdownnote.R
+import com.tjycompany.markdownnote.main.allnotes.AllNotesFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
