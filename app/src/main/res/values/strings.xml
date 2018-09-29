@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MarkDown Note</string>
+
+    <string name="category_item_count">(%d)</string>
 </resources>
