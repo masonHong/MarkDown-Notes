@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object FormatUtils {
+    private const val dateFormatPattern = "yyyy.MM.dd HH:mm"
+
     fun getDateFormatString(date: Long): String =
-            SimpleDateFormat("yyyy.MM.dd hh:mm", Locale.getDefault()).format(date)
+            SimpleDateFormat(dateFormatPattern, Locale.getDefault()).format(date)
 }
