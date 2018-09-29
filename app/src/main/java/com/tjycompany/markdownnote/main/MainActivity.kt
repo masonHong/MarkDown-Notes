@@ -3,8 +3,9 @@ package com.tjycompany.markdownnote.main
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
-import com.tjycompany.markdownnote.base.BaseTabFragment
 import com.tjycompany.markdownnote.R
+import com.tjycompany.markdownnote.base.BaseTabFragment
+import com.tjycompany.markdownnote.main.category.CategoryFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
