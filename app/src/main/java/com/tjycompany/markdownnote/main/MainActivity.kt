@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import com.tjycompany.markdownnote.base.BaseTabFragment
 import com.tjycompany.markdownnote.R
 import kotlinx.android.synthetic.main.activity_main.*
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewPager() {
+        Timber.i("initViewPager")
         val items = ArrayList<BaseTabFragment>()
 
         items.add(AllNotesFragment())
