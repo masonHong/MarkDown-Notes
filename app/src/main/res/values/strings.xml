@@ -2,4 +2,8 @@
     <string name="app_name">MarkDown Note</string>
 
     <string name="category_item_count">(%d)</string>
+    <string name="string_guideline_title">제목</string>
+    <string name="string_guideline_content">내용을 입력하세요</string>
+    <string name="string_menu_save">저장</string>
+    <string name="string_menu_attach">첨부</string>
 </resources>

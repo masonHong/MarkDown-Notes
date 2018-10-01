@@ -22,7 +22,7 @@ class AllNotesAdapter(private val listener: OnNoteClickListener) : RecyclerView.
 
     fun addItems(vararg item: AllNotesItem) {
         items.addAll(item)
-        notifyItemRangeInserted(items.size - item.size - 1, item.size)
+        notifyItemRangeInserted(items.size - 1, item.size)
     }
 
     fun setItems(items: List<AllNotesItem>) {
