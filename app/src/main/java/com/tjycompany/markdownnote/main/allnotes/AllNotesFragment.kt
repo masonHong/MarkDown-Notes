@@ -11,6 +11,7 @@ import com.tjycompany.markdownnote.R
 import com.tjycompany.markdownnote.base.BaseTabFragment
 import com.tjycompany.markdownnote.main.MainActivity
 import com.tjycompany.markdownnote.main.WriteNoteActivity
+import com.tjycompany.markdownnote.main.NoteDetailActivity
 import com.tjycompany.markdownnote.model.AllNotesItem
 import com.tjycompany.markdownnote.util.toast
 import kotlinx.android.synthetic.main.fragment_all_notes.*
@@ -30,9 +31,10 @@ class AllNotesFragment : BaseTabFragment(), AllNotesAdapter.OnNoteClickListener 
         recyclerView.setHasFixedSize(true)
 
         adapter.addItems(
-                AllNotesItem("홍태준", System.currentTimeMillis() - 10060000),
-                AllNotesItem("바보", System.currentTimeMillis() - 5007000),
-                AllNotesItem("말미잘", System.currentTimeMillis() - 1500500)
+
+                AllNotesItem(100, 1, "홍태준", System.currentTimeMillis() + 10000),
+                AllNotesItem(101, 1, "바보", System.currentTimeMillis() + 5000),
+                AllNotesItem(102, 1, "말미잘", System.currentTimeMillis())
         )
 
         buttonAdd?.setOnClickListener {
@@ -42,6 +44,10 @@ class AllNotesFragment : BaseTabFragment(), AllNotesAdapter.OnNoteClickListener 
 
     override fun onNoteClick(data: AllNotesItem?) {
         data?.toast()
+        val sendIntent = Intent(context, NoteDetailActivity::class.java).apply {
+            putExtra("NOTE_ITEM", data)
+        }
+        startActivity(sendIntent)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -49,7 +55,7 @@ class AllNotesFragment : BaseTabFragment(), AllNotesAdapter.OnNoteClickListener 
         if (requestCode == MainActivity.REQUEST_CODE_WRITE_MAIN && resultCode == Activity.RESULT_OK) {
             "저장되었습니다.".toast()
             adapter.addItems(
-                    AllNotesItem(data?.getStringExtra("temp_title")
+                    AllNotesItem(200, 2, data?.getStringExtra("temp_title")
                             ?: "", System.currentTimeMillis()))
         } else {
             "취소되었습니다.".toast()
