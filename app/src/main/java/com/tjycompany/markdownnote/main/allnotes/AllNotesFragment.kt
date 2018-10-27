@@ -1,6 +1,7 @@
 package com.tjycompany.markdownnote.main.allnotes
 
 import android.app.Activity
+import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -10,13 +11,16 @@ import android.view.ViewGroup
 import com.tjycompany.markdownnote.R
 import com.tjycompany.markdownnote.base.BaseTabFragment
 import com.tjycompany.markdownnote.main.MainActivity
-import com.tjycompany.markdownnote.main.WriteNoteActivity
 import com.tjycompany.markdownnote.main.NoteDetailActivity
+import com.tjycompany.markdownnote.main.NotesViewModel
+import com.tjycompany.markdownnote.main.WriteNoteActivity
 import com.tjycompany.markdownnote.model.AllNotesItem
 import com.tjycompany.markdownnote.util.toast
 import kotlinx.android.synthetic.main.fragment_all_notes.*
+import org.koin.android.ext.android.inject
 
 class AllNotesFragment : BaseTabFragment(), AllNotesAdapter.OnNoteClickListener {
+    private val viewModel: NotesViewModel by inject()
     private val adapter = AllNotesAdapter(this)
 
     override fun getTabTitle(): String = "전체 노트"
@@ -30,16 +34,12 @@ class AllNotesFragment : BaseTabFragment(), AllNotesAdapter.OnNoteClickListener 
         recyclerView.adapter = adapter
         recyclerView.setHasFixedSize(true)
 
-        adapter.addItems(
-
-                AllNotesItem(100, 1, "홍태준", System.currentTimeMillis() + 10000),
-                AllNotesItem(101, 1, "바보", System.currentTimeMillis() + 5000),
-                AllNotesItem(102, 1, "말미잘", System.currentTimeMillis())
-        )
-
         buttonAdd?.setOnClickListener {
             startActivityForResult(Intent(context, WriteNoteActivity::class.java), MainActivity.REQUEST_CODE_WRITE_MAIN)
         }
+
+        viewModel.allNotes.observe(this, Observer { adapter.setItems(it ?: emptyList()) })
+        viewModel.getAllNotes()
     }
 
     override fun onNoteClick(data: AllNotesItem?) {
