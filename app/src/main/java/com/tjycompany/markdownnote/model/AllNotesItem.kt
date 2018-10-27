@@ -7,9 +7,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Entity
-data class AllNotesItem(@PrimaryKey var id: Long,
-                        var catId: Long,
-                        var title: String,
-                        var date: Long) : Parcelable {
-    constructor() : this(0, 0, "", 0)
+data class AllNotesItem(@PrimaryKey(autoGenerate = true) var id: Long = 0,
+                        var catId: Long = 0,
+                        var title: String = "",
+                        var date: Long = 0) : Parcelable {
+    constructor() : this(catId = 0, title = "", date = 0)
 }

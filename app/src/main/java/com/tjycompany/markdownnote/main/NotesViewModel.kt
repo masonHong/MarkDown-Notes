@@ -3,31 +3,42 @@ package com.tjycompany.markdownnote.main
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.tjycompany.markdownnote.model.AllNotesItem
-import com.tjycompany.markdownnote.room.AppDatabase
+import com.tjycompany.markdownnote.room.dao.NotesDao
+import io.reactivex.Flowable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
-/**
- * Created by mason-hong on 2018. 10. 27..
- */
-class NotesViewModel(private val database: AppDatabase) : ViewModel() {
+class NotesViewModel(private val notesDao: NotesDao) : ViewModel() {
     val allNotes = MutableLiveData<List<AllNotesItem>>()
+    private val _allNotes = ArrayList<AllNotesItem>()
     private var disposable: Disposable? = null
 
     fun getAllNotes() {
-        disposable = database.notesDao().getAllNotes()
+        disposable = notesDao.getAllNotes()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         {
-                            allNotes.value = it
+                            _allNotes.clear()
+                            _allNotes.addAll(it)
+                            allNotes.value = _allNotes
                         },
                         {
                             Timber.i(it)
                         }
                 )
+    }
+
+    fun createNote(note: AllNotesItem) {
+        Single.fromCallable { notesDao.insertNotes(note) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
+        _allNotes.add(note)
+        allNotes.value = _allNotes
     }
 
     override fun onCleared() {

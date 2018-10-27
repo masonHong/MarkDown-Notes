@@ -53,10 +53,9 @@ class AllNotesFragment : BaseTabFragment(), AllNotesAdapter.OnNoteClickListener 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // 모든 노트보기 페이지에서 추가 버튼을 눌렀을 경우
         if (requestCode == MainActivity.REQUEST_CODE_WRITE_MAIN && resultCode == Activity.RESULT_OK) {
+            viewModel.createNote(AllNotesItem(catId = 2, title = data?.getStringExtra("temp_title")
+                    ?: "", date = System.currentTimeMillis()))
             "저장되었습니다.".toast()
-            adapter.addItems(
-                    AllNotesItem(200, 2, data?.getStringExtra("temp_title")
-                            ?: "", System.currentTimeMillis()))
         } else {
             "취소되었습니다.".toast()
         }
