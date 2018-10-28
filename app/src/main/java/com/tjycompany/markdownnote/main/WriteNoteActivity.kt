@@ -9,6 +9,7 @@ import android.text.style.UnderlineSpan
 import android.view.Menu
 import android.view.MenuItem
 import com.tjycompany.markdownnote.R
+import com.tjycompany.markdownnote.common.Constants
 import com.tjycompany.markdownnote.util.toast
 import kotlinx.android.synthetic.main.activity_note_write.*
 
@@ -42,8 +43,8 @@ class WriteNoteActivity : AppCompatActivity() {
                 } else {
                     // DB 에 저장하기. 아래는 임시 데이터
                     val intent = Intent().apply {
-                        putExtra("temp_title", editTextTitle.text.toString())
-                        putExtra("temp_content", editTextContent.text.toString())
+                        putExtra(Constants.TITLE, editTextTitle.text.toString())
+                        putExtra(Constants.CONTENT, editTextContent.text.toString())
                     }
                     setResult(Activity.RESULT_OK, intent)
                 }
