@@ -14,6 +14,9 @@ import com.tjycompany.markdownnote.util.toast
 import kotlinx.android.synthetic.main.activity_note_write.*
 
 class WriteNoteActivity : AppCompatActivity() {
+    companion object {
+        private const val REQUEST_SELECT_CATEGORY = 200
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +27,7 @@ class WriteNoteActivity : AppCompatActivity() {
 
         textViewCategory.text = category
         textViewCategory.setOnClickListener {
+            startActivityForResult(Intent(this, SelectCategoryActivity::class.java), REQUEST_SELECT_CATEGORY)
             "카테고리 선택 버튼 클릭".toast()
         }
     }
@@ -61,5 +65,14 @@ class WriteNoteActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_SELECT_CATEGORY) {
+            if (resultCode == Activity.RESULT_OK) {
+                // 유휴ㅜ
+            }
+        }
     }
 }

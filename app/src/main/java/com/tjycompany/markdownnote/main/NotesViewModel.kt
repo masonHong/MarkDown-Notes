@@ -4,7 +4,6 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.tjycompany.markdownnote.model.AllNotesItem
 import com.tjycompany.markdownnote.room.dao.NotesDao
-import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -17,7 +16,7 @@ class NotesViewModel(private val notesDao: NotesDao) : ViewModel() {
     private var disposable: Disposable? = null
 
     fun getAllNotes() {
-        disposable = notesDao.getAllNotes()
+        disposable = notesDao.all()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -33,7 +32,7 @@ class NotesViewModel(private val notesDao: NotesDao) : ViewModel() {
     }
 
     fun createNote(note: AllNotesItem) {
-        Single.fromCallable { notesDao.insertNotes(note) }
+        Single.fromCallable { notesDao.insert(note) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()

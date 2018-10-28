@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import com.tjycompany.markdownnote.R
 import com.tjycompany.markdownnote.base.BaseTabFragment
 import com.tjycompany.markdownnote.common.Constants
-import com.tjycompany.markdownnote.main.MainActivity
 import com.tjycompany.markdownnote.main.NoteDetailActivity
 import com.tjycompany.markdownnote.main.NotesViewModel
 import com.tjycompany.markdownnote.main.WriteNoteActivity
@@ -21,6 +20,10 @@ import kotlinx.android.synthetic.main.fragment_all_notes.*
 import org.koin.android.ext.android.inject
 
 class AllNotesFragment : BaseTabFragment(), AllNotesAdapter.OnNoteClickListener {
+    companion object {
+        private const val REQUEST_CODE_WRITE_MAIN = 300
+    }
+
     private val viewModel: NotesViewModel by inject()
     private val adapter = AllNotesAdapter(this)
 
@@ -36,7 +39,7 @@ class AllNotesFragment : BaseTabFragment(), AllNotesAdapter.OnNoteClickListener 
         recyclerView.setHasFixedSize(true)
 
         buttonAdd?.setOnClickListener {
-            startActivityForResult(Intent(context, WriteNoteActivity::class.java), MainActivity.REQUEST_CODE_WRITE_MAIN)
+            startActivityForResult(Intent(context, WriteNoteActivity::class.java), REQUEST_CODE_WRITE_MAIN)
         }
 
         viewModel.allNotes.observe(this, Observer { adapter.setItems(it ?: emptyList()) })
@@ -53,7 +56,7 @@ class AllNotesFragment : BaseTabFragment(), AllNotesAdapter.OnNoteClickListener 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // 모든 노트보기 페이지에서 추가 버튼을 눌렀을 경우
-        if (requestCode == MainActivity.REQUEST_CODE_WRITE_MAIN && resultCode == Activity.RESULT_OK) {
+        if (requestCode == REQUEST_CODE_WRITE_MAIN && resultCode == Activity.RESULT_OK) {
             viewModel.createNote(AllNotesItem().apply {
                 catId = 2
                 title = data?.getStringExtra(Constants.TITLE) ?: ""
